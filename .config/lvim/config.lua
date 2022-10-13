@@ -1,3 +1,4 @@
+vim.o.clipboard = "unnamedplus"
 vim.g.python3_host_prog = "/home/alex/.pyenv/shims/python"
 --[[
 lvim is the global options object
@@ -110,6 +111,7 @@ lvim.builtin.treesitter.highlight.enabled = true
 -- vim.list_extend(lvim.lsp.automatic_configuration.skipped_servers, { "pyright" })
 -- local opts = {} -- check the lspconfig documentation for a list of all possible options
 -- require("lvim.lsp.manager").setup("pyright", opts)
+require("lvim.lsp.manager").setup("solidity")
 
 -- ---remove a server from the skipped list, e.g. eslint, or emmet_ls. !!Requires `:LvimCacheReset` to take effect!!
 -- ---`:LvimInfo` lists which server(s) are skipped for the current filetype
@@ -132,6 +134,7 @@ local formatters = require "lvim.lsp.null-ls.formatters"
 formatters.setup {
   { command = "black", filetypes = { "python" } },
   { command = "isort", filetypes = { "python" } },
+  { command = "prettier", filetypes = { "typescript", "typescriptreact", "javascript" } },
   --   {
   --     -- each formatter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
   --     command = "prettier",
@@ -148,6 +151,7 @@ local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
   { command = "flake8", filetypes = { "python" } },
   { command = "mypy", filetypes = { "python" } },
+  { command = "eslint_d", filetypes = { "javascript", "typescript", "typescriptreact" } },
   --   {
   --     -- each linter accepts a list of options identical to https://github.com/jose-elias-alvarez/null-ls.nvim/blob/main/doc/BUILTINS.md#Configuration
   --     command = "shellcheck",
@@ -155,11 +159,11 @@ linters.setup {
   --     -- these cannot contain whitespaces, options such as `--line-width 80` become either `{'--line-width', '80'}` or `{'--line-width=80'}`
   --     extra_args = { "--severity", "warning" },
   --   },
-  --   {
-  --     command = "codespell",
-  --     ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
-  --     filetypes = { "javascript", "python" },
-  --   },
+  {
+    command = "codespell",
+    ---@usage specify which filetypes to enable. By default a providers will attach to all the filetypes it supports.
+    filetypes = { "javascript", "python", "typescript" },
+  },
 }
 
 -- Additional Plugins
